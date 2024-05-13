@@ -1,0 +1,303 @@
+Entrega 1: Patrones de Construcción
+
+// Interfaz para medios digitales
+interface MedioDigital {
+    void mostrarInformacion();
+}
+
+// Clase concreta para libros
+class Libro implements MedioDigital {
+    public void mostrarInformacion() {
+        System.out.println("Información sobre un libro.");
+    }
+}
+
+// Clase concreta para revistas
+class Revista implements MedioDigital {
+    public void mostrarInformacion() {
+        System.out.println("Información sobre una revista.");
+    }
+}
+
+// Clase concreta para periódicos
+class Periodico implements MedioDigital {
+    public void mostrarInformacion() {
+        System.out.println("Información sobre un periódico.");
+    }
+}
+
+// Interfaz de la fábrica de medios
+interface FabricaMedios {
+    MedioDigital crearMedio();
+}
+
+// Fábrica para crear libros
+class FabricaLibro implements FabricaMedios {
+    public MedioDigital crearMedio() {
+        return new Libro();
+    }
+}
+
+// Fábrica para crear revistas
+class FabricaRevista implements FabricaMedios {
+    public MedioDigital crearMedio() {
+        return new Revista();
+    }
+}
+
+// Fábrica para crear periódicos
+class FabricaPeriodico implements FabricaMedios {
+    public MedioDigital crearMedio() {
+        return new Periodico();
+    }
+}
+
+// Clase para construir medios
+class ConstructorMedios {
+    private String titulo;
+    private String autor;
+    private int año;
+
+    public ConstructorMedios establecerTitulo(String titulo) {
+        this.titulo = titulo;
+        return this;
+    }
+
+    public ConstructorMedios establecerAutor(String autor) {
+        this.autor = autor;
+        return this;
+    }
+
+    public ConstructorMedios establecerAño(int año) {
+        this.año = año;
+        return this;
+    }
+
+    public MedioDigital construir(FabricaMedios fabrica) {
+        MedioDigital medio = fabrica.crearMedio();
+        
+        System.out.println("Configurando medio con título: " + titulo + ", autor: " + autor + ", año: " + año);
+        return medio;
+    }
+}
+
+// Interfaz para búsqueda
+interface Busqueda {
+    void buscar();
+}
+
+// búsqueda por título
+class BusquedaTitulo implements Busqueda {
+    public void buscar() {
+        System.out.println("Buscando por título...");
+    }
+}
+
+// búsqueda por autor
+class BusquedaAutor implementsBusqueda {
+    public void buscar() {
+        System.out.println("Buscando por autor...");
+    }
+}
+
+// búsqueda por año
+class BusquedaAño implements Busqueda {
+    public void buscar() {
+        System.out.println("Buscando por año...");
+    }
+}
+
+Entrega 2: Patrones de Estructuración
+
+// Interfaz para componentes de medios
+interface ComponenteMedio {
+    void mostrarInformacion();
+}
+
+// Clase para medios individuales
+class MedioDigitalHoja implements ComponenteMedio {
+    private MedioDigital medio;
+
+    public MedioDigitalHoja(MedioDigital medio) {
+        this.medio = medio;
+    }
+
+    public void mostrarInformacion() {
+        medio.mostrarInformacion();
+    }
+}
+
+// Clase para colecciones de medios (compuesto)
+class ColeccionMediosCompuesto implements ComponenteMedio {
+    private List<ComponenteMedio> componentesMedios = new ArrayList<>();
+
+    public void agregarMedio(ComponenteMedio componenteMedio) {
+        componentesMedios.add(componenteMedio);
+    }
+
+    public void mostrarInformacion() {
+        for (ComponenteMedio componenteMedio : componentesMedios) {
+            componenteMedio.mostrarInformacion();
+        }
+    }
+}
+
+// Interfaz para el formato de archivo existente
+interface FormatoArchivo {
+    void leerArchivo();
+}
+
+// Clase existente con un formato de archivo específico
+class FormatoArchivoExistente implements FormatoArchivo {
+    public void leerArchivo() {
+        System.out.println("Leyendo archivo en formato existente...");
+    }
+}
+
+// Adapter para convertir el formato de archivo existente a un formato compatible con la biblioteca
+class Adapter FormatoArchivo implements MedioDigital {
+    private FormatoArchivo formatoArchivo;
+
+    public AdapterFormatoArchivo(FormatoArchivo formatoArchivo) {
+        this.formatoArchivo = formatoArchivo;
+    }
+
+    public void mostrarInformacion() {
+        formatoArchivo.leerArchivo();
+    }
+}
+
+Entrega 3: Patrones de Comportamiento
+
+// Interfaz para comandos
+interface Comando {
+    void ejecutar();
+}
+
+// Comando para descargar un medio
+class ComandoDescargar implements Comando {
+    private MedioDigital medio;
+
+    public ComandoDescargar(MedioDigital medio) {
+        this.medio = medio;
+    }
+
+    public void ejecutar() {
+        System.out.println("Descargando el medio...");
+    }
+}
+
+// Comando para leer un medio
+class ComandoLeer implements Comando {
+    private MedioDigital medio;
+
+    public ComandoLeer(MedioDigital medio) {
+        this.medio = medio;
+    }
+
+    public void ejecutar() {
+        System.out.println("Leyendo el medio...");
+    }
+}
+
+// Comando para marcar como favorito un medio
+class ComandoMarcarFavorito implements Comando {
+    private MedioDigital medio;
+
+    public ComandoMarcarFavorito(MedioDigital medio) {
+        this.medio = medio;
+    }
+
+    public void ejecutar() {
+        System.out.println("Marcando el medio como favorito...");
+    }
+}
+
+// Clase mediadora para la biblioteca
+class MediadorBiblioteca {
+    private SistemaAlmacenamiento almacenamiento;
+    private ServicioRecomendacion recomendacion;
+
+    public MediadorBiblioteca(SistemaAlmacenamiento almacenamiento, ServicioRecomendacion recomendacion) {
+        this.almacenamiento = almacenamiento;
+        this.recomendacion = recomendacion;
+    }
+
+    public void realizarBusqueda(String criterio) {
+        almacenamiento.buscar(criterio);
+    }
+
+    public void obtenerRecomendaciones() {
+        recomendacion.obtenerRecomendaciones();
+    }
+}
+
+Entrega 4: Patrón Composite y MVC
+
+// Interfaz para componentes de medios
+interface ComponenteMedio {
+    void mostrarInformacion();
+}
+
+// Clase para medios individuales 
+class MedioDigitalHoja implements ComponenteMedio {
+    private MedioDigital medio;
+
+    public MedioDigitalHoja(MedioDigital medio) {
+        this.medio = medio;
+    }
+
+    public void mostrarInformacion() {
+        medio.mostrarInformacion();
+    }
+}
+
+// Clase para colecciones de medios (compuesto)
+class ColeccionMediosCompuesto implements ComponenteMedio {
+    private List<ComponenteMedio> componentesMedios = new ArrayList<>();
+
+    public void agregarMedio(ComponenteMedio componenteMedio) {
+        componentesMedios.add(componenteMedio);
+    }
+
+    public void mostrarInformacion() {
+        for (ComponenteMedio componenteMedio : componentesMedios) {
+            componenteMedio.mostrarInformacion();
+        }
+    }
+}
+
+// Clase para gestionar los medios digitales
+class ModeloMediosDigitales {
+    private List<MedioDigital> mediosDigitales = new ArrayList<>();
+
+    public void agregarMedioDigital(MedioDigital medio) {
+        mediosDigitales.add(medio);
+    }
+
+}
+
+// Clase para la interfaz de usuario
+class VistaBiblioteca {
+    public void mostrarMenu() {
+    }
+
+    public void mostrarResultadosBusqueda() {
+    }
+}
+
+// Clase para el controlador
+class ControladorBiblioteca {
+    private ModeloMediosDigitales modelo;
+    private VistaBiblioteca vista;
+
+    public ControladorBiblioteca(ModeloMediosDigitales modelo, VistaBiblioteca vista) {
+        this.modelo = modelo;
+        this.vista = vista;
+    }
+
+    public void buscarMedioDigital(String criterio) {
+    
+    }
+
+}
