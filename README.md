@@ -1,5 +1,6 @@
 # tecnicas_5
 
+# https://github.com/SergioPoppe/tecnicas_5.git 
 
 EJERCICIO 1:
 
