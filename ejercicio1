@@ -1,0 +1,163 @@
+Entrega 1: Patrones de Construcción
+
+// Factory Method para crear diferentes tipos de restaurantes
+class restaurantes {
+    public restaurantes createRestaurante(String type) {
+        switch (type) {
+            case "rapida":
+                return new ComidaRapida();
+            case "tematica":
+                return new Tematico();
+            case "lujo":
+                return new Lujo();
+            default:
+                return null;
+        }
+    }
+}
+
+// Singleton para la gestión centralizada de los restaurantes
+class gestorRestaurante {
+    private static gestorRestaurante instance;
+
+    private gestorRestaurante() {}
+
+    public static gestorRestaurante getInstance() {
+        if (instance == null) {
+            instance = new gestorRestaurante();
+        }
+        return instance;
+    }
+}
+
+Entrega 2: Patrones de Estructuración
+
+
+// Implementación de un restaurante individual
+class RestauranteIndividual implements ComponenteRestaurante {
+    @Override
+    public void mostrarMenu() {    
+    }
+
+    @Override
+    public void Comanda() {  
+    }
+
+    @Override
+    public void servirComida() {  
+    }
+    
+}
+
+// Implementación de un grupo de restaurantes
+class GrupoRestaurantes implements ComponenteRestaurante {
+    private List<ComponenteRestaurante> hijos = new ArrayList<>();
+
+    public void agregarRestaurante(ComponenteRestaurante restaurante) {
+        hijos.add(restaurante);
+    }
+
+    public void quitarRestaurante(ComponenteRestaurante restaurante) {
+        hijos.remove(restaurante);
+    }
+
+    @Override
+    public void mostrarMenu() {   
+    }
+
+    @Override
+    public void Comanda() {      
+    }
+
+    @Override
+    public void servirComida() { 
+    }
+}
+
+// Adapter para integrar sistemas externos de reserva o entrega de comida
+class AdapterSistemaExterno {
+    private SistemaReservaExterno sistemaReserva;
+    private SistemaEntregaExterno sistemaEntrega;
+
+    public AdapterSistemaExterno(SistemaReservaExterno sistemaReserva, SistemaEntregaExterno sistemaEntrega) {
+        this.sistemaReserva = sistemaReserva;
+        this.sistemaEntrega = sistemaEntrega;
+    }
+}
+
+Entrega 3: Patrones de Comportamiento
+
+// Implementaciones de comandos para diferentes acciones en el restaurante
+class ComandoReserva implements Comando {
+    @Override
+    public void ejecutar() {
+    }
+}
+
+class ComandoOrden implements Comando {
+    @Override
+    public void ejecutar() {
+    }
+}
+
+class ComandoCancelar implements Comando {
+    @Override
+    public void ejecutar() {
+    }
+}
+
+// Implementaciones de estados de las mesas (libre, reservada, ocupada)
+class EstadoMesaLibre implements EstadoMesa {
+    @Override
+    public void manejarEstado() {
+    }
+}
+
+class EstadoMesaReservada implements EstadoMesa {
+    @Override
+    public void manejarEstado() {
+    }
+}
+
+class EstadoMesaOcupada implements EstadoMesa {
+    @Override
+    public void manejarEstado() {
+    }
+}
+
+
+Entrega 4: Patrón Composite y MVC
+
+// Componente base para la estructura de restaurantes (ya definido en la Entrega 2)
+
+// Modelo
+class ModeloRestaurante {
+}
+
+// Vista
+class VistaRestaurante {
+}
+
+// Controlador
+class ControladorRestaurante {
+    private ModeloRestaurante modelo;
+    private VistaRestaurante vista;
+
+    public ControladorRestaurante(ModeloRestaurante modelo, VistaRestaurante vista) {
+        this.modelo = modelo;
+        this.vista = vista;
+    }
+
+    public void realizarAccion(String accion) {
+        // Lógica para manejar acciones del cliente
+        if (accion.equals("reserva")) {
+            modelo.solicitarReserva();
+        } else if (accion.equals("pedido")) {
+            modelo.realizarPedido();
+        } else if (accion.equals("cancelar")) {
+            modelo.cancelarReserva();
+        } else {
+            vista.mostrarMensaje("Acción no válida.");
+        }
+    }
+}
